@@ -1,7 +1,7 @@
 import { useSunoStore } from "@/store/sunoStore";
 import { TaskCard } from "./TaskCard";
 import { useEffect, useCallback } from "react";
-import { FetchResponseData, SunoClip } from "@/types/suno";
+import { FetchResponseData, SunoClip, SunoTask } from "@/types/suno";
 import { Button } from "./ui/button";
 import { RefreshCw } from "lucide-react";
 import { showError } from "@/utils/toast";
@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 export function TaskList() {
   const { t } = useTranslation();
-  const { tasks, baseUrl, apiKey, updateTask, autoCheckInterval } = useSunoStore();
+  const { tasks, baseUrl, apiKey, updateTask, autoCheckInterval, autoRename } = useSunoStore();
 
   const fetchTaskStatus = useCallback(async (taskId: string) => {
     if (!baseUrl || !apiKey) {
@@ -40,12 +40,21 @@ export function TaskList() {
         const overallStatus = clips.every(c => c.status === 'complete') ? 'complete' :
                               clips.some(c => c.status === 'streaming') ? 'streaming' : 'queued';
 
-        updateTask(taskId, {
+        const updates: Partial<SunoTask> = {
           status: overallStatus,
           progress: data.progress,
           clips: clips,
           fail_reason: data.fail_reason,
-        });
+        };
+
+        if (autoRename) {
+          const newTitle = data.data?.[0]?.title;
+          if (newTitle && newTitle.trim()) {
+            updates.title = newTitle;
+          }
+        }
+
+        updateTask(taskId, updates);
       } else {
         console.error(`Failed to fetch task ${taskId}:`, result.message);
         updateTask(taskId, { fail_reason: result.message || 'Failed to fetch status' });
@@ -55,7 +64,7 @@ export function TaskList() {
       console.error(`Error fetching task ${taskId}:`, errorMessage);
       updateTask(taskId, { fail_reason: `Network error: ${errorMessage}` });
     }
-  }, [baseUrl, apiKey, updateTask]);
+  }, [baseUrl, apiKey, updateTask, autoRename]);
 
   // For auto-checking. It will NOT re-check failed tasks to be efficient.
   const fetchAllUnfinishedTasks = useCallback(() => {

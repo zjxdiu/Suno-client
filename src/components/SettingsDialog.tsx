@@ -17,18 +17,25 @@ import { useState } from "react";
 import { MadeWithDyad } from "./made-with-dyad";
 import { useTranslation } from "react-i18next";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Switch } from "./ui/switch";
 
 export function SettingsDialog() {
   const { t, i18n } = useTranslation();
-  const { baseUrl, apiKey, autoCheckInterval, setBaseUrl, setApiKey, setAutoCheckInterval } = useSunoStore();
+  const { 
+    baseUrl, apiKey, autoCheckInterval, autoRename,
+    setBaseUrl, setApiKey, setAutoCheckInterval, setAutoRename 
+  } = useSunoStore();
+  
   const [localBaseUrl, setLocalBaseUrl] = useState(baseUrl);
   const [localApiKey, setLocalApiKey] = useState(apiKey);
   const [localInterval, setLocalInterval] = useState(autoCheckInterval);
+  const [localAutoRename, setLocalAutoRename] = useState(autoRename);
 
   const handleSave = () => {
     setBaseUrl(localBaseUrl);
     setApiKey(localApiKey);
     setAutoCheckInterval(localInterval);
+    setAutoRename(localAutoRename);
   };
 
   const handleLanguageChange = (lang: string) => {
@@ -105,6 +112,18 @@ export function SettingsDialog() {
                   <SelectItem value="zh">简体中文</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="auto-rename" className="text-right">
+              {t('settings.autoRename')}
+            </Label>
+            <div className="col-span-3">
+              <Switch
+                id="auto-rename"
+                checked={localAutoRename}
+                onCheckedChange={setLocalAutoRename}
+              />
             </div>
           </div>
         </div>

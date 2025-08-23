@@ -9,7 +9,8 @@
     "apiKey": "API 密钥",
     "autoCheck": "自动检查",
     "save": "保存更改",
-    "language": "语言"
+    "language": "语言",
+    "autoRename": "任务自动重命名"
   },
   "createForm": {
     "creativeTab": "创意模式",

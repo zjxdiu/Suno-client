@@ -7,11 +7,13 @@ interface SunoState {
   apiKey: string;
   tasks: SunoTask[];
   autoCheckInterval: number; // in seconds
+  autoRename: boolean;
   setBaseUrl: (url: string) => void;
   setApiKey: (key: string) => void;
   addTask: (task: SunoTask) => void;
   updateTask: (taskId: string, updates: Partial<SunoTask>) => void;
   setAutoCheckInterval: (interval: number) => void;
+  setAutoRename: (enabled: boolean) => void;
   deleteTask: (taskId: string) => void;
   renameTask: (taskId: string, newTitle: string) => void;
 }
@@ -23,6 +25,7 @@ export const useSunoStore = create<SunoState>()(
       apiKey: '',
       tasks: [],
       autoCheckInterval: 5, // default to 5 seconds
+      autoRename: false, // default to false
       setBaseUrl: (url) => set({ baseUrl: url }),
       setApiKey: (key) => set({ apiKey: key }),
       addTask: (task) => set((state) => ({ tasks: [task, ...state.tasks] })),
@@ -33,6 +36,7 @@ export const useSunoStore = create<SunoState>()(
           ),
         })),
       setAutoCheckInterval: (interval) => set({ autoCheckInterval: interval }),
+      setAutoRename: (enabled) => set({ autoRename: enabled }),
       deleteTask: (taskId) =>
         set((state) => ({
           tasks: state.tasks.filter((task) => task.id !== taskId),
@@ -51,7 +55,8 @@ export const useSunoStore = create<SunoState>()(
         baseUrl: state.baseUrl, 
         apiKey: state.apiKey,
         tasks: state.tasks,
-        autoCheckInterval: state.autoCheckInterval 
+        autoCheckInterval: state.autoCheckInterval,
+        autoRename: state.autoRename,
       }),
     }
   )

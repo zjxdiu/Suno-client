@@ -9,7 +9,8 @@
     "apiKey": "API Key",
     "autoCheck": "Auto-check",
     "save": "Save changes",
-    "language": "Language"
+    "language": "Language",
+    "autoRename": "Task auto rename"
   },
   "createForm": {
     "creativeTab": "Creative",

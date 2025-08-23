@@ -51,12 +51,15 @@
   },
   "taskList": {
     "title": "Task Queue",
+    "export": "Export Tasks",
+    "refresh": "Refresh Tasks",
     "empty": {
       "noTasks": "No tasks yet.",
       "createTask": "Create a new generation task on the left."
     },
     "toasts": {
-      "settingsNeeded": "Please set Base URL and API Key in settings before refreshing."
+      "settingsNeeded": "Please set Base URL and API Key in settings before refreshing.",
+      "noTasksToExport": "There are no tasks to export."
     }
   },
   "taskCard": {

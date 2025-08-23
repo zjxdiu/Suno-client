@@ -23,6 +23,7 @@ export interface SunoTask {
   title?: string; // from custom mode
   make_instrumental?: boolean;
   mv?: string;
+  isExpanded?: boolean;
 }
 
 export interface FetchResponseData {

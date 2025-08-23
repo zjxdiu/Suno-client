@@ -16,6 +16,7 @@ interface SunoState {
   setAutoRename: (enabled: boolean) => void;
   deleteTask: (taskId: string) => void;
   renameTask: (taskId: string, newTitle: string) => void;
+  toggleTaskExpansion: (taskId: string) => void;
 }
 
 export const useSunoStore = create<SunoState>()(
@@ -28,7 +29,10 @@ export const useSunoStore = create<SunoState>()(
       autoRename: false, // default to false
       setBaseUrl: (url) => set({ baseUrl: url }),
       setApiKey: (key) => set({ apiKey: key }),
-      addTask: (task) => set((state) => ({ tasks: [task, ...state.tasks] })),
+      addTask: (task) => set((state) => {
+        const newTask = { ...task, isExpanded: true };
+        return { tasks: [newTask, ...state.tasks] };
+      }),
       updateTask: (taskId, updates) =>
         set((state) => ({
           tasks: state.tasks.map((task) =>
@@ -45,6 +49,12 @@ export const useSunoStore = create<SunoState>()(
         set((state) => ({
           tasks: state.tasks.map((task) =>
             task.id === taskId ? { ...task, title: newTitle } : task
+          ),
+        })),
+      toggleTaskExpansion: (taskId) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === taskId ? { ...task, isExpanded: !task.isExpanded } : task
           ),
         })),
     }),

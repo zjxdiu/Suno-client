@@ -44,7 +44,8 @@
       "submitting": "Submitting task...",
       "submitSuccess": "Task submitted successfully!",
       "submitFailed": "Failed to submit task: {{message}}",
-      "errorOccurred": "An error occurred: {{message}}"
+      "errorOccurred": "An error occurred: {{message}}",
+      "invalidResponse": "Received an invalid response from the server. Please check your Base URL and API proxy."
     }
   },
   "taskList": {
@@ -66,5 +67,16 @@
     "play": "Play",
     "stop": "Stop",
     "download": "Download"
+  },
+  "taskActions": {
+    "rename": "Rename",
+    "delete": "Delete",
+    "renameTaskTitle": "Rename Task",
+    "newTitleLabel": "New Title",
+    "save": "Save",
+    "deleteConfirmTitle": "Are you sure?",
+    "deleteConfirmDescription": "This action cannot be undone. This will permanently delete the task from your list.",
+    "cancel": "Cancel",
+    "confirmDelete": "Delete"
   }
 }

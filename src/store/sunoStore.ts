@@ -12,6 +12,8 @@ interface SunoState {
   addTask: (task: SunoTask) => void;
   updateTask: (taskId: string, updates: Partial<SunoTask>) => void;
   setAutoCheckInterval: (interval: number) => void;
+  deleteTask: (taskId: string) => void;
+  renameTask: (taskId: string, newTitle: string) => void;
 }
 
 export const useSunoStore = create<SunoState>()(
@@ -31,14 +33,24 @@ export const useSunoStore = create<SunoState>()(
           ),
         })),
       setAutoCheckInterval: (interval) => set({ autoCheckInterval: interval }),
+      deleteTask: (taskId) =>
+        set((state) => ({
+          tasks: state.tasks.filter((task) => task.id !== taskId),
+        })),
+      renameTask: (taskId, newTitle) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === taskId ? { ...task, title: newTitle } : task
+          ),
+        })),
     }),
     {
-      name: 'suno-client-storage', // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+      name: 'suno-client-storage',
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ 
         baseUrl: state.baseUrl, 
         apiKey: state.apiKey,
-        tasks: state.tasks, // also persist tasks
+        tasks: state.tasks,
         autoCheckInterval: state.autoCheckInterval 
       }),
     }

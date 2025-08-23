@@ -62,6 +62,12 @@ export function CreateForm() {
         body: JSON.stringify(body),
       });
 
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        showError(t('createForm.toasts.invalidResponse'));
+        return;
+      }
+
       const result = await response.json();
 
       if (response.ok && result.code === 'success') {

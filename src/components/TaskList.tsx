@@ -67,13 +67,15 @@ export function TaskList() {
   }, [tasks, fetchTaskStatus, baseUrl, apiKey, t]);
 
   useEffect(() => {
-    if (autoCheckInterval > 0) {
+    const hasUnfinishedTasks = tasks.some(t => t.status !== 'complete' && !t.fail_reason);
+
+    if (autoCheckInterval > 0 && hasUnfinishedTasks) {
       const intervalId = setInterval(() => {
         fetchAllUnfinishedTasks();
       }, autoCheckInterval * 1000);
       return () => clearInterval(intervalId);
     }
-  }, [autoCheckInterval, fetchAllUnfinishedTasks]);
+  }, [autoCheckInterval, fetchAllUnfinishedTasks, tasks]);
 
   return (
     <div className="h-full flex flex-col">

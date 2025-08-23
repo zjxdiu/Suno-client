@@ -3,12 +3,14 @@ import { Progress } from "@/components/ui/progress";
 import { SunoTask } from "@/types/suno";
 import { MusicCard } from "./MusicCard";
 import { Badge } from "./ui/badge";
+import { useTranslation } from "react-i18next";
 
 interface TaskCardProps {
   task: SunoTask;
 }
 
 export function TaskCard({ task }: TaskCardProps) {
+  const { t } = useTranslation();
   const progressValue = parseInt(task.progress.replace('%', ''));
 
   const getStatusBadgeVariant = (status: string) => {
@@ -30,10 +32,10 @@ export function TaskCard({ task }: TaskCardProps) {
         <div className="flex justify-between items-start">
           <div>
             <CardTitle className="text-lg truncate max-w-md">
-              {task.title || task.gpt_description_prompt || 'Custom Task'}
+              {task.title || task.gpt_description_prompt || t('taskCard.customTaskTitle')}
             </CardTitle>
             <CardDescription>
-              Task ID: {task.id}
+              {t('taskCard.taskId', { id: task.id })}
             </CardDescription>
           </div>
           <Badge variant={getStatusBadgeVariant(task.status)}>{task.status}</Badge>
@@ -42,7 +44,7 @@ export function TaskCard({ task }: TaskCardProps) {
       <CardContent>
         {task.fail_reason && (
           <div className="text-destructive text-sm mb-4">
-            <strong>Error:</strong> {task.fail_reason}
+            <strong>{t('taskCard.error', { reason: '' })}</strong> {task.fail_reason}
           </div>
         )}
         {task.status !== 'complete' && !task.fail_reason && (

@@ -10,12 +10,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface MusicCardProps {
   clip: SunoClip;
 }
 
 export function MusicCard({ clip }: MusicCardProps) {
+  const { t } = useTranslation();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -62,12 +64,12 @@ export function MusicCard({ clip }: MusicCardProps) {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{isPlaying ? 'Stop' : 'Play'}</p>
+              <p>{isPlaying ? t('musicCard.stop') : t('musicCard.play')}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
         <span className="text-sm text-muted-foreground">
-          {clip.duration > 0 ? `${Math.floor(clip.duration / 60)}:${String(clip.duration % 60).padStart(2, '0')}` : '--:--'}
+          {clip.duration > 0 ? `${Math.floor(clip.duration / 60)}:${String(Math.round(clip.duration % 60)).padStart(2, '0')}` : '--:--'}
         </span>
         <TooltipProvider>
           <Tooltip>
@@ -77,7 +79,7 @@ export function MusicCard({ clip }: MusicCardProps) {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Download</p>
+              <p>{t('musicCard.download')}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

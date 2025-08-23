@@ -15,8 +15,11 @@ import { useSunoStore } from "@/store/sunoStore";
 import { Settings } from "lucide-react";
 import { useState } from "react";
 import { MadeWithDyad } from "./made-with-dyad";
+import { useTranslation } from "react-i18next";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 export function SettingsDialog() {
+  const { t, i18n } = useTranslation();
   const { baseUrl, apiKey, autoCheckInterval, setBaseUrl, setApiKey, setAutoCheckInterval } = useSunoStore();
   const [localBaseUrl, setLocalBaseUrl] = useState(baseUrl);
   const [localApiKey, setLocalApiKey] = useState(apiKey);
@@ -28,6 +31,10 @@ export function SettingsDialog() {
     setAutoCheckInterval(localInterval);
   };
 
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -37,15 +44,15 @@ export function SettingsDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Settings</DialogTitle>
+          <DialogTitle>{t('settings.title')}</DialogTitle>
           <DialogDescription>
-            Configure your Suno API settings here. Click save when you're done.
+            {t('settings.description')}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="base-url" className="text-right">
-              Base URL
+              {t('settings.baseUrl')}
             </Label>
             <Input
               id="base-url"
@@ -57,7 +64,7 @@ export function SettingsDialog() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="api-key" className="text-right">
-              API Key
+              {t('settings.apiKey')}
             </Label>
             <Input
               id="api-key"
@@ -70,7 +77,7 @@ export function SettingsDialog() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="interval" className="text-right">
-              Auto-check
+              {t('settings.autoCheck')}
             </Label>
             <div className="col-span-3 flex items-center gap-2">
               <Slider
@@ -84,11 +91,27 @@ export function SettingsDialog() {
               <span>{localInterval}s</span>
             </div>
           </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="language" className="text-right">
+              {t('settings.language')}
+            </Label>
+            <div className="col-span-3">
+              <Select value={i18n.language} onValueChange={handleLanguageChange}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="zh">简体中文</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </div>
         <DialogFooter className="sm:justify-between">
           <MadeWithDyad />
           <DialogTrigger asChild>
-            <Button type="submit" onClick={handleSave}>Save changes</Button>
+            <Button type="submit" onClick={handleSave}>{t('settings.save')}</Button>
           </DialogTrigger>
         </DialogFooter>
       </DialogContent>

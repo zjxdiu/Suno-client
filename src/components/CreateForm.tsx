@@ -10,8 +10,10 @@ import { useSunoStore } from "@/store/sunoStore";
 import { SunoTask } from "@/types/suno";
 import { showLoading, showError, showSuccess, dismissToast } from "@/utils/toast";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function CreateForm() {
+  const { t } = useTranslation();
   const { baseUrl, apiKey, addTask } = useSunoStore();
   const [mode, setMode] = useState('creative');
 
@@ -26,7 +28,7 @@ export function CreateForm() {
     if (mode === 'creative') {
       body.gpt_description_prompt = formData.get('gpt_description_prompt') as string;
       if (!body.gpt_description_prompt) {
-        showError("Prompt is required for creative mode.");
+        showError(t('createForm.toasts.promptRequired'));
         return;
       }
     } else {
@@ -34,21 +36,21 @@ export function CreateForm() {
       body.tags = formData.get('tags') as string;
       body.title = formData.get('title') as string;
       if (!body.tags) {
-        showError("Tags are required for custom mode.");
+        showError(t('createForm.toasts.tagsRequired'));
         return;
       }
       if (!body.prompt && !make_instrumental) {
-        showError("Lyrics are required for custom mode unless it's instrumental.");
+        showError(t('createForm.toasts.lyricsRequired'));
         return;
       }
     }
 
     if (!baseUrl || !apiKey) {
-      showError("Please set Base URL and API Key in settings.");
+      showError(t('createForm.toasts.settingsNeeded'));
       return;
     }
 
-    const toastId = showLoading("Submitting task...");
+    const toastId = showLoading(t('createForm.toasts.submitting'));
 
     try {
       const response = await fetch(`${baseUrl}/suno/submit/music`, {
@@ -73,13 +75,14 @@ export function CreateForm() {
           ...body,
         };
         addTask(newTask);
-        showSuccess("Task submitted successfully!");
+        showSuccess(t('createForm.toasts.submitSuccess'));
         (event.target as HTMLFormElement).reset();
       } else {
-        showError(`Failed to submit task: ${result.message || 'Unknown error'}`);
+        showError(t('createForm.toasts.submitFailed', { message: result.message || 'Unknown error' }));
       }
     } catch (error) {
-      showError(`An error occurred: ${error instanceof Error ? error.message : String(error)}`);
+      const message = error instanceof Error ? error.message : String(error);
+      showError(t('createForm.toasts.errorOccurred', { message }));
     } finally {
       dismissToast(toastId);
     }
@@ -89,19 +92,19 @@ export function CreateForm() {
     <form onSubmit={handleSubmit}>
       <Tabs defaultValue="creative" className="w-full" onValueChange={setMode}>
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="creative">Creative</TabsTrigger>
-          <TabsTrigger value="custom">Custom</TabsTrigger>
+          <TabsTrigger value="creative">{t('createForm.creativeTab')}</TabsTrigger>
+          <TabsTrigger value="custom">{t('createForm.customTab')}</TabsTrigger>
         </TabsList>
         <TabsContent value="creative">
           <Card>
             <CardHeader>
-              <CardTitle>Creative Mode</CardTitle>
-              <CardDescription>Generate music with a simple prompt. AI will handle the rest.</CardDescription>
+              <CardTitle>{t('createForm.creativeMode.title')}</CardTitle>
+              <CardDescription>{t('createForm.creativeMode.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="gpt_description_prompt">Prompt</Label>
-                <Textarea id="gpt_description_prompt" name="gpt_description_prompt" placeholder="e.g., An epic cinematic trailer score" />
+                <Label htmlFor="gpt_description_prompt">{t('createForm.creativeMode.promptLabel')}</Label>
+                <Textarea id="gpt_description_prompt" name="gpt_description_prompt" placeholder={t('createForm.creativeMode.promptPlaceholder')} />
               </div>
             </CardContent>
           </Card>
@@ -109,21 +112,21 @@ export function CreateForm() {
         <TabsContent value="custom">
           <Card>
             <CardHeader>
-              <CardTitle>Custom Mode</CardTitle>
-              <CardDescription>Fine-tune your music with custom lyrics, tags, and title.</CardDescription>
+              <CardTitle>{t('createForm.customMode.title')}</CardTitle>
+              <CardDescription>{t('createForm.customMode.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="prompt">Lyrics</Label>
-                <Textarea id="prompt" name="prompt" placeholder="[Verse]\n..." rows={5} />
+                <Label htmlFor="prompt">{t('createForm.customMode.lyricsLabel')}</Label>
+                <Textarea id="prompt" name="prompt" placeholder={t('createForm.customMode.lyricsPlaceholder')} rows={5} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="tags">Tags</Label>
-                <Input id="tags" name="tags" placeholder="e.g., 80s pop, synthwave" />
+                <Label htmlFor="tags">{t('createForm.customMode.tagsLabel')}</Label>
+                <Input id="tags" name="tags" placeholder={t('createForm.customMode.tagsPlaceholder')} />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="title">Title</Label>
-                <Input id="title" name="title" placeholder="e.g., Midnight Drive" />
+                <Label htmlFor="title">{t('createForm.customMode.titleLabel')}</Label>
+                <Input id="title" name="title" placeholder={t('createForm.customMode.titlePlaceholder')} />
               </div>
             </CardContent>
           </Card>
@@ -131,10 +134,10 @@ export function CreateForm() {
         <Card className="mt-4">
           <CardContent className="pt-6 space-y-4">
             <div className="flex items-center justify-between">
-              <Label htmlFor="mv">Model Version</Label>
+              <Label htmlFor="mv">{t('createForm.common.modelVersion')}</Label>
               <Select name="mv" defaultValue="chirp-auk">
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select a model" />
+                  <SelectValue placeholder={t('createForm.common.selectModel')} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="chirp-v3-5">Chirp v3.5</SelectItem>
@@ -144,12 +147,12 @@ export function CreateForm() {
               </Select>
             </div>
             <div className="flex items-center justify-between">
-              <Label htmlFor="make_instrumental">Instrumental</Label>
+              <Label htmlFor="make_instrumental">{t('createForm.common.instrumental')}</Label>
               <Switch id="make_instrumental" name="make_instrumental" />
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full">Generate</Button>
+            <Button type="submit" className="w-full">{t('createForm.common.generate')}</Button>
           </CardFooter>
         </Card>
       </Tabs>

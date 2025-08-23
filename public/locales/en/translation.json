@@ -1,0 +1,70 @@
+{
+  "header": {
+    "title": "Suno Client"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Configure your Suno API settings here. Click save when you're done.",
+    "baseUrl": "Base URL",
+    "apiKey": "API Key",
+    "autoCheck": "Auto-check",
+    "save": "Save changes",
+    "language": "Language"
+  },
+  "createForm": {
+    "creativeTab": "Creative",
+    "customTab": "Custom",
+    "creativeMode": {
+      "title": "Creative Mode",
+      "description": "Generate music with a simple prompt. AI will handle the rest.",
+      "promptLabel": "Prompt",
+      "promptPlaceholder": "e.g., An epic cinematic trailer score"
+    },
+    "customMode": {
+      "title": "Custom Mode",
+      "description": "Fine-tune your music with custom lyrics, tags, and title.",
+      "lyricsLabel": "Lyrics",
+      "lyricsPlaceholder": "[Verse]\n...",
+      "tagsLabel": "Tags",
+      "tagsPlaceholder": "e.g., 80s pop, synthwave",
+      "titleLabel": "Title",
+      "titlePlaceholder": "e.g., Midnight Drive"
+    },
+    "common": {
+      "modelVersion": "Model Version",
+      "selectModel": "Select a model",
+      "instrumental": "Instrumental",
+      "generate": "Generate"
+    },
+    "toasts": {
+      "promptRequired": "Prompt is required for creative mode.",
+      "tagsRequired": "Tags are required for custom mode.",
+      "lyricsRequired": "Lyrics are required for custom mode unless it's instrumental.",
+      "settingsNeeded": "Please set Base URL and API Key in settings.",
+      "submitting": "Submitting task...",
+      "submitSuccess": "Task submitted successfully!",
+      "submitFailed": "Failed to submit task: {{message}}",
+      "errorOccurred": "An error occurred: {{message}}"
+    }
+  },
+  "taskList": {
+    "title": "Task Queue",
+    "empty": {
+      "noTasks": "No tasks yet.",
+      "createTask": "Create a new generation task on the left."
+    },
+    "toasts": {
+      "settingsNeeded": "Please set Base URL and API Key in settings before refreshing."
+    }
+  },
+  "taskCard": {
+    "customTaskTitle": "Custom Task",
+    "taskId": "Task ID: {{id}}",
+    "error": "Error: {{reason}}"
+  },
+  "musicCard": {
+    "play": "Play",
+    "stop": "Stop",
+    "download": "Download"
+  }
+}

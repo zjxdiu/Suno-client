@@ -2,12 +2,15 @@ import { CreateForm } from "@/components/CreateForm";
 import { TaskList } from "@/components/TaskList";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { SettingsDialog } from "@/components/SettingsDialog";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="h-screen w-screen flex flex-col bg-background text-foreground overflow-hidden">
       <header className="flex items-center justify-between p-4 border-b">
-        <h1 className="text-xl font-bold">Suno Client</h1>
+        <h1 className="text-xl font-bold">{t('header.title')}</h1>
         <SettingsDialog />
       </header>
       <main className="flex-1 overflow-hidden">

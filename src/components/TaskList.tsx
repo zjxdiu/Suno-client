@@ -5,8 +5,10 @@ import { FetchResponseData, SunoClip } from "@/types/suno";
 import { Button } from "./ui/button";
 import { RefreshCw } from "lucide-react";
 import { showError } from "@/utils/toast";
+import { useTranslation } from "react-i18next";
 
 export function TaskList() {
+  const { t } = useTranslation();
   const { tasks, baseUrl, apiKey, updateTask, autoCheckInterval } = useSunoStore();
 
   const fetchTaskStatus = useCallback(async (taskId: string) => {
@@ -57,12 +59,12 @@ export function TaskList() {
 
   const fetchAllUnfinishedTasks = useCallback(() => {
     if (!baseUrl || !apiKey) {
-      showError("Please set Base URL and API Key in settings before refreshing.");
+      showError(t('taskList.toasts.settingsNeeded'));
       return;
     }
     const unfinishedTasks = tasks.filter(t => t.status !== 'complete' && !t.fail_reason);
     unfinishedTasks.forEach(task => fetchTaskStatus(task.id));
-  }, [tasks, fetchTaskStatus, baseUrl, apiKey]);
+  }, [tasks, fetchTaskStatus, baseUrl, apiKey, t]);
 
   useEffect(() => {
     if (autoCheckInterval > 0) {
@@ -76,7 +78,7 @@ export function TaskList() {
   return (
     <div className="h-full flex flex-col">
       <div className="p-4 border-b flex justify-between items-center">
-        <h2 className="text-lg font-semibold">Task Queue</h2>
+        <h2 className="text-lg font-semibold">{t('taskList.title')}</h2>
         <Button variant="outline" size="icon" onClick={fetchAllUnfinishedTasks}>
           <RefreshCw className="h-4 w-4" />
         </Button>
@@ -84,8 +86,8 @@ export function TaskList() {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {tasks.length === 0 ? (
           <div className="text-center text-muted-foreground pt-10">
-            <p>No tasks yet.</p>
-            <p>Create a new generation task on the left.</p>
+            <p>{t('taskList.empty.noTasks')}</p>
+            <p>{t('taskList.empty.createTask')}</p>
           </div>
         ) : (
           tasks.map(task => <TaskCard key={task.id} task={task} />)

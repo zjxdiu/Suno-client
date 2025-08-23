@@ -57,13 +57,20 @@ export function TaskList() {
     }
   }, [baseUrl, apiKey, updateTask]);
 
+  // For auto-checking. It will NOT re-check failed tasks to be efficient.
   const fetchAllUnfinishedTasks = useCallback(() => {
+    const unfinishedTasks = tasks.filter(t => t.status !== 'complete' && !t.fail_reason);
+    unfinishedTasks.forEach(task => fetchTaskStatus(task.id));
+  }, [tasks, fetchTaskStatus]);
+
+  // For the manual refresh button. It WILL re-check failed tasks.
+  const forceFetchAllTasks = useCallback(() => {
     if (!baseUrl || !apiKey) {
       showError(t('taskList.toasts.settingsNeeded'));
       return;
     }
-    const unfinishedTasks = tasks.filter(t => t.status !== 'complete' && !t.fail_reason);
-    unfinishedTasks.forEach(task => fetchTaskStatus(task.id));
+    const tasksToForceCheck = tasks.filter(t => t.status !== 'complete');
+    tasksToForceCheck.forEach(task => fetchTaskStatus(task.id));
   }, [tasks, fetchTaskStatus, baseUrl, apiKey, t]);
 
   useEffect(() => {
@@ -81,7 +88,7 @@ export function TaskList() {
     <div className="h-full flex flex-col">
       <div className="p-4 border-b flex justify-between items-center">
         <h2 className="text-lg font-semibold">{t('taskList.title')}</h2>
-        <Button variant="outline" size="icon" onClick={fetchAllUnfinishedTasks}>
+        <Button variant="outline" size="icon" onClick={forceFetchAllTasks}>
           <RefreshCw className="h-4 w-4" />
         </Button>
       </div>

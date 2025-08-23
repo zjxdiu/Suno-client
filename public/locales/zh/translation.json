@@ -51,6 +51,7 @@
   },
   "taskList": {
     "title": "任务队列",
+    "export": "Export Tasks",
     "empty": {
       "noTasks": "暂无任务。",
       "createTask": "在左侧创建一个新的生成任务。"

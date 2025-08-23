@@ -1,17 +1,30 @@
-// Update this page (the content is just a fallback if you fail to update the page)
-
-import { MadeWithDyad } from "@/components/made-with-dyad";
+import { CreateForm } from "@/components/CreateForm";
+import { TaskList } from "@/components/TaskList";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { SettingsDialog } from "@/components/SettingsDialog";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">
-          Start building your amazing project here!
-        </p>
-      </div>
-      <MadeWithDyad />
+    <div className="h-screen w-screen flex flex-col bg-background text-foreground overflow-hidden">
+      <header className="flex items-center justify-between p-4 border-b">
+        <h1 className="text-xl font-bold">Suno Client</h1>
+        <SettingsDialog />
+      </header>
+      <main className="flex-1 overflow-hidden">
+        <ResizablePanelGroup direction="horizontal" className="h-full">
+          <ResizablePanel defaultSize={40} minSize={30}>
+            <div className="h-full overflow-y-auto p-4">
+              <CreateForm />
+            </div>
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel defaultSize={60} minSize={40}>
+            <div className="h-full overflow-y-auto">
+              <TaskList />
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </main>
     </div>
   );
 };

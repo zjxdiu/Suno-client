@@ -42,7 +42,7 @@ export function PromptHistoryDialog({ isOpen, onOpenChange, history, onSelect, m
               {mode === 'creative' && (history as CreativeHistory).map((prompt, index) => (
                 <Card key={index}>
                   <CardContent className="p-4 flex items-center justify-between gap-4">
-                    <p className="text-sm flex-1">{prompt}</p>
+                    <p className="text-sm flex-1 break-words">{prompt}</p>
                     <Button size="sm" onClick={() => onSelect(prompt)}>{t('promptHistory.use')}</Button>
                   </CardContent>
                 </Card>
@@ -51,10 +51,10 @@ export function PromptHistoryDialog({ isOpen, onOpenChange, history, onSelect, m
                 <Card key={index}>
                   <CardHeader>
                     <CardTitle className="text-base">{item.title || t('promptHistory.noTitle')}</CardTitle>
-                    <CardDescription>{item.tags}</CardDescription>
+                    <CardDescription className="break-words">{item.tags}</CardDescription>
                   </CardHeader>
-                  <CardContent className="flex items-center justify-between gap-4 pt-0">
-                    <p className="text-sm text-muted-foreground flex-1 truncate">{item.prompt || t('promptHistory.noLyrics')}</p>
+                  <CardContent className="flex items-start justify-between gap-4 pt-0">
+                    <p className="text-sm text-muted-foreground flex-1 break-words">{item.prompt || t('promptHistory.noLyrics')}</p>
                     <Button size="sm" onClick={() => onSelect(item)}>{t('promptHistory.use')}</Button>
                   </CardContent>
                 </Card>

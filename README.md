@@ -2,9 +2,9 @@
 
 Suno-client是一个为Suno API proxy制作的简易web应用。
 
-参考项目：(Suno-API)[https://github.com/Suno-API]
+参考项目：[Suno-API](https://github.com/Suno-API)
 
-**该应用使用**(dyad)[https://github.com/dyad-sh/dyad]**制作，代码由AI生成。**
+**该应用使用**[dyad](https://github.com/dyad-sh/dyad)**制作，代码由AI生成。**
 
 ## 核心特性
 
@@ -28,7 +28,7 @@ Suno-client是一个为Suno API proxy制作的简易web应用。
 
 由于中转API的响应速度无法保证，因此自动检查间隔请勿设置过小，建议10-20s或只手动检查！
 
-在线Demo：(Vercel app)[https://suno-client-pink.vercel.app]
+在线Demo：[Vercel app](https://suno-client-pink.vercel.app)
 
 1. 启动开发服务器：
 

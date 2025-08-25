@@ -4,32 +4,32 @@
   },
   "settings": {
     "title": "Settings",
-    "description": "Configure your Suno API settings here. Click save when you're done.",
+    "description": "Configure your API settings and application preferences here.",
     "baseUrl": "Base URL",
     "apiKey": "API Key",
-    "autoCheck": "Auto-check",
-    "save": "Save changes",
+    "autoCheck": "Auto Check",
     "language": "Language",
-    "autoRename": "Task auto rename"
+    "autoRename": "Auto Rename",
+    "save": "Save Changes"
   },
   "createForm": {
     "creativeTab": "Creative",
     "customTab": "Custom",
     "creativeMode": {
       "title": "Creative Mode",
-      "description": "Generate music with a simple prompt. AI will handle the rest.",
+      "description": "Generate music based on a descriptive prompt.",
       "promptLabel": "Prompt",
-      "promptPlaceholder": "e.g., An epic cinematic trailer score"
+      "promptPlaceholder": "e.g., An epic orchestral piece for a movie trailer"
     },
     "customMode": {
       "title": "Custom Mode",
-      "description": "Fine-tune your music with custom lyrics, tags, and title.",
+      "description": "Provide your own lyrics, style, and title.",
       "lyricsLabel": "Lyrics",
-      "lyricsPlaceholder": "[Verse]\n...",
-      "tagsLabel": "Tags",
-      "tagsPlaceholder": "e.g., 80s pop, synthwave",
+      "lyricsPlaceholder": "[Verse]\\nYour lyrics here...\\n[Chorus]\\nMore lyrics...",
+      "tagsLabel": "Style of Music",
+      "tagsPlaceholder": "e.g., acoustic, rock, pop",
       "titleLabel": "Title",
-      "titlePlaceholder": "e.g., Midnight Drive"
+      "titlePlaceholder": "Your song title"
     },
     "common": {
       "modelVersion": "Model Version",
@@ -39,47 +39,50 @@
     },
     "toasts": {
       "promptRequired": "Prompt is required for creative mode.",
-      "tagsRequired": "Tags are required for custom mode.",
-      "lyricsRequired": "Lyrics are required for custom mode unless it's instrumental.",
-      "settingsNeeded": "Please set Base URL and API Key in settings.",
+      "tagsRequired": "Style of Music is required for custom mode.",
+      "lyricsRequired": "Lyrics are required for custom mode unless it's an instrumental.",
+      "settingsNeeded": "Please set Base URL and API Key in settings first.",
       "submitting": "Submitting task...",
+      "invalidResponse": "Received an invalid response from the server.",
       "submitSuccess": "Task submitted successfully!",
-      "submitFailed": "Failed to submit task: {{message}}",
-      "errorOccurred": "An error occurred: {{message}}",
-      "invalidResponse": "Received an invalid response from the server. Please check your Base URL and API proxy."
+      "submitFailed": "Task submission failed: {message}",
+      "errorOccurred": "An error occurred: {message}"
     }
   },
   "taskList": {
-    "title": "Task Queue",
+    "title": "Task List",
+    "refresh": "Refresh All",
     "export": "Export Tasks",
-    "refresh": "Refresh Tasks",
     "empty": {
       "noTasks": "No tasks yet.",
-      "createTask": "Create a new generation task on the left."
+      "createTask": "Create a new one to get started."
     },
     "toasts": {
-      "settingsNeeded": "Please set Base URL and API Key in settings before refreshing.",
+      "settingsNeeded": "Please set Base URL and API Key in settings first.",
       "noTasksToExport": "There are no tasks to export."
     }
   },
   "taskCard": {
     "customTaskTitle": "Custom Task",
-    "taskId": "Task ID: {{id}}",
-    "error": "Error: {{reason}}"
+    "taskId": "Task ID: {id}",
+    "error": "Error:"
   },
   "musicCard": {
     "play": "Play",
     "stop": "Stop",
     "download": "Download",
+    "noTags": "No tags provided",
     "actions": {
       "viewLyrics": "View Lyrics",
-      "openAudio": "Open Audio URL",
-      "openImage": "Open Image URL"
+      "openAudio": "Open Audio in New Tab",
+      "openImage": "Open Image in New Tab"
     },
     "lyricsDialog": {
       "title": "Lyrics",
+      "noLyrics": "No lyrics available for this track.",
       "close": "Close",
-      "noLyrics": "No lyrics available."
+      "copy": "Copy",
+      "copied": "Lyrics copied to clipboard!"
     }
   },
   "taskActions": {
@@ -87,10 +90,10 @@
     "delete": "Delete",
     "renameTaskTitle": "Rename Task",
     "newTitleLabel": "New Title",
+    "cancel": "Cancel",
     "save": "Save",
     "deleteConfirmTitle": "Are you sure?",
-    "deleteConfirmDescription": "This action cannot be undone. This will permanently delete the task from your list.",
-    "cancel": "Cancel",
+    "deleteConfirmDescription": "This action cannot be undone. This will permanently delete the task.",
     "confirmDelete": "Delete"
   }
 }

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { SunoTask } from "@/types/suno";
-import { MusicCard } from "./MusicCard";
+import { MusicBar } from "./MusicBar";
 import { Badge } from "./ui/badge";
 import { useTranslation } from "react-i18next";
 import { TaskActions } from "./TaskActions";
@@ -73,9 +73,9 @@ export function TaskCard({ task }: TaskCardProps) {
                 <p className="text-sm text-muted-foreground text-center mt-1">{task.progress}</p>
               </div>
             )}
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-4">
+            <div className="flex flex-col gap-2">
               {task.clips.map(clip => (
-                <MusicCard key={clip.id} clip={clip} />
+                <MusicBar key={clip.id} clip={clip} />
               ))}
             </div>
           </CardContent>

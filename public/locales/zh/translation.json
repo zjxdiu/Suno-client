@@ -4,32 +4,32 @@
   },
   "settings": {
     "title": "设置",
-    "description": "在此处配置您的 Suno API 设置。完成后点击保存。",
-    "baseUrl": "基础 URL",
-    "apiKey": "API 密钥",
+    "description": "在此配置您的API设置和应用程序首选项。",
+    "baseUrl": "接口地址",
+    "apiKey": "API密钥",
     "autoCheck": "自动检查",
-    "save": "保存更改",
     "language": "语言",
-    "autoRename": "任务自动重命名"
+    "autoRename": "自动重命名",
+    "save": "保存更改"
   },
   "createForm": {
     "creativeTab": "创意模式",
     "customTab": "自定义模式",
     "creativeMode": {
       "title": "创意模式",
-      "description": "用简单的提示生成音乐，AI 将处理其余部分。",
-      "promptLabel": "提示",
-      "promptPlaceholder": "例如，史诗般的电影预告片配乐"
+      "description": "根据描述性提示生成音乐。",
+      "promptLabel": "提示词",
+      "promptPlaceholder": "例如，一首用于电影预告片的史诗管弦乐"
     },
     "customMode": {
       "title": "自定义模式",
-      "description": "通过自定义歌词、标签和标题来微调您的音乐。",
+      "description": "提供您自己的歌词、风格和标题。",
       "lyricsLabel": "歌词",
-      "lyricsPlaceholder": "[主歌]\n...",
-      "tagsLabel": "标签",
-      "tagsPlaceholder": "例如，80年代流行，合成波",
+      "lyricsPlaceholder": "[Verse]\\n你的歌词...\\n[Chorus]\\n更多歌词...",
+      "tagsLabel": "音乐风格",
+      "tagsPlaceholder": "例如，acoustic, rock, pop",
       "titleLabel": "标题",
-      "titlePlaceholder": "例如，午夜驾驶"
+      "titlePlaceholder": "你的歌曲标题"
     },
     "common": {
       "modelVersion": "模型版本",
@@ -38,47 +38,51 @@
       "generate": "生成"
     },
     "toasts": {
-      "promptRequired": "创意模式需要提示。",
-      "tagsRequired": "自定义模式需要标签。",
+      "promptRequired": "创意模式需要提示词。",
+      "tagsRequired": "自定义模式需要音乐风格。",
       "lyricsRequired": "除非是纯音乐，否则自定义模式需要歌词。",
-      "settingsNeeded": "请在设置中填写基础 URL 和 API 密钥。",
+      "settingsNeeded": "请先在设置中填写接口地址和API密钥。",
       "submitting": "正在提交任务...",
+      "invalidResponse": "从服务器收到无效响应。",
       "submitSuccess": "任务提交成功！",
-      "submitFailed": "提交任务失败：{{message}}",
-      "errorOccurred": "发生错误：{{message}}",
-      "invalidResponse": "从服务器收到无效响应。请检查您的基础 URL 和 API 代理。"
+      "submitFailed": "任务提交失败: {message}",
+      "errorOccurred": "发生错误: {message}"
     }
   },
   "taskList": {
-    "title": "任务队列",
-    "export": "导出队列信息",
-    "refresh": "刷新未完成任务",
+    "title": "任务列表",
+    "refresh": "全部刷新",
+    "export": "导出任务",
     "empty": {
       "noTasks": "暂无任务。",
-      "createTask": "在左侧创建一个新的生成任务。"
+      "createTask": "创建一个新任务开始吧。"
     },
     "toasts": {
-      "settingsNeeded": "刷新前请在设置中填写基础 URL 和 API 密钥。"
+      "settingsNeeded": "请先在设置中填写接口地址和API密钥。",
+      "noTasksToExport": "没有可导出的任务。"
     }
   },
   "taskCard": {
     "customTaskTitle": "自定义任务",
-    "taskId": "任务 ID: {{id}}",
-    "error": "错误: {{reason}}"
+    "taskId": "任务ID: {id}",
+    "error": "错误:"
   },
   "musicCard": {
-    "play": "Play",
-    "stop": "Stop",
-    "download": "Download",
+    "play": "播放",
+    "stop": "停止",
+    "download": "下载",
+    "noTags": "未提供标签",
     "actions": {
       "viewLyrics": "查看歌词",
-      "openAudio": "打开音频链接",
-      "openImage": "打开图片链接"
+      "openAudio": "在新标签页中打开音频",
+      "openImage": "在新标签页中打开图片"
     },
     "lyricsDialog": {
       "title": "歌词",
+      "noLyrics": "此曲目无可用歌词。",
       "close": "关闭",
-      "noLyrics": "无可用歌词。"
+      "copy": "复制",
+      "copied": "歌词已复制到剪贴板！"
     }
   },
   "taskActions": {
@@ -86,10 +90,10 @@
     "delete": "删除",
     "renameTaskTitle": "重命名任务",
     "newTitleLabel": "新标题",
+    "cancel": "取消",
     "save": "保存",
     "deleteConfirmTitle": "您确定吗？",
-    "deleteConfirmDescription": "此操作无法撤销。这将从您的列表中永久删除该任务。",
-    "cancel": "取消",
+    "deleteConfirmDescription": "此操作无法撤销。这将永久删除该任务。",
     "confirmDelete": "删除"
   }
 }

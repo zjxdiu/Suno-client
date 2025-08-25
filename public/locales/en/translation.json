@@ -39,7 +39,7 @@
     },
     "toasts": {
       "promptRequired": "Prompt is required for creative mode.",
-      "tagsRequired": "Style of Music is required for custom mode.",
+      "tagsRequired": "Music tags is required for custom mode.",
       "lyricsRequired": "Lyrics are required for custom mode unless it's an instrumental.",
       "settingsNeeded": "Please set Base URL and API Key in settings first.",
       "submitting": "Submitting task...",

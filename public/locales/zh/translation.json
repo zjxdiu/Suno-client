@@ -64,7 +64,7 @@
   },
   "taskCard": {
     "customTaskTitle": "自定义任务",
-    "taskId": "任务ID: {id}",
+    "taskId": "任务ID: {{id}}",
     "error": "错误:"
   },
   "musicCard": {

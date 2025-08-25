@@ -64,7 +64,7 @@
   },
   "taskCard": {
     "customTaskTitle": "Custom Task",
-    "taskId": "Task ID: {id}",
+    "taskId": "Task ID: {{id}}",
     "error": "Error:"
   },
   "musicCard": {

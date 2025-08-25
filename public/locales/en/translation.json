@@ -26,7 +26,7 @@
       "description": "Provide your own lyrics, style, and title.",
       "lyricsLabel": "Lyrics",
       "lyricsPlaceholder": "[Verse]\\nYour lyrics here...\\n[Chorus]\\nMore lyrics...",
-      "tagsLabel": "Style of Music",
+      "tagsLabel": "Tags",
       "tagsPlaceholder": "e.g., acoustic, rock, pop",
       "titleLabel": "Title",
       "titlePlaceholder": "Your song title"

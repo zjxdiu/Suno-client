@@ -25,9 +25,10 @@ Suno-client是一个为Suno API proxy制作的简易web应用。
 **您必须提供自己的API信息！**
 
 （并非广告，仅为自己实测结果）目前确认可用的API中转商：Gue API，云雾API，柏拉图AI
+
 由于中转API的响应速度无法保证，因此自动检查间隔请勿设置过小，建议10-20s或只手动检查！
 
-在线Demo：(Vercel app)[]
+在线Demo：(Vercel app)[https://suno-client-pink.vercel.app]
 
 1. 启动开发服务器：
 

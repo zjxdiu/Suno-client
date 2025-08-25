@@ -95,5 +95,13 @@
     "deleteConfirmTitle": "您确定吗？",
     "deleteConfirmDescription": "此操作无法撤销。这将永久删除该任务。",
     "confirmDelete": "删除"
+  },
+  "promptHistory": {
+    "title": "历史记录",
+    "description": "选择一个以前使用过的提示再次使用。",
+    "empty": "您的提示历史是空的。",
+    "use": "使用",
+    "noTitle": "无标题",
+    "noLyrics": "无歌词"
   }
 }

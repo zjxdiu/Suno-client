@@ -26,7 +26,7 @@
       "description": "Provide your own lyrics, style, and title.",
       "lyricsLabel": "Lyrics",
       "lyricsPlaceholder": "[Verse]\\nYour lyrics here...\\n[Chorus]\\nMore lyrics...",
-      "tagsLabel": "Tags",
+      "tagsLabel": "Style of Music",
       "tagsPlaceholder": "e.g., acoustic, rock, pop",
       "titleLabel": "Title",
       "titlePlaceholder": "Your song title"
@@ -39,7 +39,7 @@
     },
     "toasts": {
       "promptRequired": "Prompt is required for creative mode.",
-      "tagsRequired": "Music tags is required for custom mode.",
+      "tagsRequired": "Style of Music is required for custom mode.",
       "lyricsRequired": "Lyrics are required for custom mode unless it's an instrumental.",
       "settingsNeeded": "Please set Base URL and API Key in settings first.",
       "submitting": "Submitting task...",
@@ -95,5 +95,13 @@
     "deleteConfirmTitle": "Are you sure?",
     "deleteConfirmDescription": "This action cannot be undone. This will permanently delete the task.",
     "confirmDelete": "Delete"
+  },
+  "promptHistory": {
+    "title": "Prompt History",
+    "description": "Select a previously used prompt to use it again.",
+    "empty": "Your prompt history is empty.",
+    "use": "Use",
+    "noTitle": "No Title",
+    "noLyrics": "No Lyrics"
   }
 }

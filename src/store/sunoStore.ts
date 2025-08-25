@@ -2,12 +2,20 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { SunoTask } from '@/types/suno';
 
+export interface CustomHistoryItem {
+  prompt: string;
+  tags: string;
+  title: string;
+}
+
 interface SunoState {
   baseUrl: string;
   apiKey: string;
   tasks: SunoTask[];
   autoCheckInterval: number; // in seconds
   autoRename: boolean;
+  creativeHistory: string[];
+  customHistory: CustomHistoryItem[];
   setBaseUrl: (url: string) => void;
   setApiKey: (key: string) => void;
   addTask: (task: SunoTask) => void;
@@ -17,6 +25,8 @@ interface SunoState {
   deleteTask: (taskId: string) => void;
   renameTask: (taskId: string, newTitle: string) => void;
   toggleTaskExpansion: (taskId: string) => void;
+  addCreativeHistoryItem: (prompt: string) => void;
+  addCustomHistoryItem: (item: CustomHistoryItem) => void;
 }
 
 export const useSunoStore = create<SunoState>()(
@@ -27,6 +37,8 @@ export const useSunoStore = create<SunoState>()(
       tasks: [],
       autoCheckInterval: 5, // default to 5 seconds
       autoRename: false, // default to false
+      creativeHistory: [],
+      customHistory: [],
       setBaseUrl: (url) => set({ baseUrl: url }),
       setApiKey: (key) => set({ apiKey: key }),
       addTask: (task) => set((state) => {
@@ -57,6 +69,16 @@ export const useSunoStore = create<SunoState>()(
             task.id === taskId ? { ...task, isExpanded: !task.isExpanded } : task
           ),
         })),
+      addCreativeHistoryItem: (prompt) => set((state) => {
+        if (!prompt.trim()) return {};
+        const newHistory = [prompt, ...state.creativeHistory.filter(h => h !== prompt)].slice(0, 50);
+        return { creativeHistory: newHistory };
+      }),
+      addCustomHistoryItem: (item) => set((state) => {
+        if (!item.tags.trim() && !item.title.trim() && !item.prompt.trim()) return {};
+        const newHistory = [item, ...state.customHistory.filter(h => !(h.prompt === item.prompt && h.tags === item.tags && h.title === item.title))].slice(0, 50);
+        return { customHistory: newHistory };
+      }),
     }),
     {
       name: 'suno-client-storage',
@@ -67,6 +89,8 @@ export const useSunoStore = create<SunoState>()(
         tasks: state.tasks,
         autoCheckInterval: state.autoCheckInterval,
         autoRename: state.autoRename,
+        creativeHistory: state.creativeHistory,
+        customHistory: state.customHistory,
       }),
     }
   )

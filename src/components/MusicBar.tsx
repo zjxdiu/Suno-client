@@ -7,7 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Progress } from "@/components/ui/progress";
+import { Slider } from "@/components/ui/slider";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
@@ -24,7 +24,6 @@ export function MusicBar({ clip }: MusicBarProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLyricsOpen, setIsLyricsOpen] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(clip.duration || 0);
 
@@ -50,13 +49,20 @@ export function MusicBar({ clip }: MusicBarProps) {
   const handleTimeUpdate = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
-      setProgress((audioRef.current.currentTime / audioRef.current.duration) * 100);
     }
   };
 
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
       setDuration(audioRef.current.duration);
+    }
+  };
+
+  const handleSeek = (value: number[]) => {
+    if (audioRef.current) {
+      const newTime = value[0];
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
     }
   };
 
@@ -87,7 +93,13 @@ export function MusicBar({ clip }: MusicBarProps) {
             </Button>
             <div className="flex-1 flex items-center gap-2">
               <span className="text-xs text-muted-foreground w-10 text-center">{formatTime(currentTime)}</span>
-              <Progress value={progress} className="h-2" />
+              <Slider
+                value={[currentTime]}
+                max={duration || 1}
+                step={0.1}
+                onValueChange={handleSeek}
+                disabled={clip.status !== 'complete'}
+              />
               <span className="text-xs text-muted-foreground w-10 text-center">{formatTime(duration)}</span>
             </div>
           </div>

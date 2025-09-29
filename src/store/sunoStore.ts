@@ -27,6 +27,7 @@ interface SunoState {
   toggleTaskExpansion: (taskId: string) => void;
   addCreativeHistoryItem: (prompt: string) => void;
   addCustomHistoryItem: (item: CustomHistoryItem) => void;
+  importState: (newState: Partial<SunoState>) => void;
 }
 
 export const useSunoStore = create<SunoState>()(
@@ -79,6 +80,7 @@ export const useSunoStore = create<SunoState>()(
         const newHistory = [item, ...state.customHistory.filter(h => !(h.prompt === item.prompt && h.tags === item.tags && h.title === item.title))].slice(0, 50);
         return { customHistory: newHistory };
       }),
+      importState: (newState) => set(newState),
     }),
     {
       name: 'suno-client-storage',

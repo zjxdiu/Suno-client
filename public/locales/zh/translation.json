@@ -10,7 +10,16 @@
     "autoCheck": "自动检查",
     "language": "语言",
     "autoRename": "自动重命名",
-    "save": "保存更改"
+    "save": "保存更改",
+    "dataManagement": "数据管理",
+    "dataManagementDescription": "备份和恢复您的应用程序数据。",
+    "exportAllData": "导出数据",
+    "importData": "导入数据",
+    "toasts": {
+      "exportSuccess": "数据导出成功！",
+      "importSuccess": "数据导入成功！",
+      "importFailed": "数据导入失败，请检查文件格式。"
+    }
   },
   "createForm": {
     "creativeTab": "创意模式",
@@ -52,14 +61,12 @@
   "taskList": {
     "title": "任务列表",
     "refresh": "全部刷新",
-    "export": "导出任务",
     "empty": {
       "noTasks": "暂无任务。",
       "createTask": "创建一个新任务开始吧。"
     },
     "toasts": {
-      "settingsNeeded": "请先在设置中填写接口地址和API密钥。",
-      "noTasksToExport": "没有可导出的任务。"
+      "settingsNeeded": "请先在设置中填写接口地址和API密钥。"
     }
   },
   "taskCard": {

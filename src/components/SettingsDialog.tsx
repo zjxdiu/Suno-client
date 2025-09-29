@@ -12,24 +12,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { useSunoStore } from "@/store/sunoStore";
-import { Settings } from "lucide-react";
-import { useState } from "react";
+import { Settings, Upload, Download } from "lucide-react";
+import { useState, useRef } from "react";
 import { MadeWithDyad } from "./made-with-dyad";
 import { useTranslation } from "react-i18next";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Switch } from "./ui/switch";
+import { Separator } from "./ui/separator";
+import { showSuccess, showError } from "@/utils/toast";
 
 export function SettingsDialog() {
   const { t, i18n } = useTranslation();
   const { 
     baseUrl, apiKey, autoCheckInterval, autoRename,
-    setBaseUrl, setApiKey, setAutoCheckInterval, setAutoRename 
+    setBaseUrl, setApiKey, setAutoCheckInterval, setAutoRename, importState 
   } = useSunoStore();
   
   const [localBaseUrl, setLocalBaseUrl] = useState(baseUrl);
   const [localApiKey, setLocalApiKey] = useState(apiKey);
   const [localInterval, setLocalInterval] = useState(autoCheckInterval);
   const [localAutoRename, setLocalAutoRename] = useState(autoRename);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSave = () => {
     setBaseUrl(localBaseUrl);
@@ -40,6 +43,78 @@ export function SettingsDialog() {
 
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
+  };
+
+  const handleExport = () => {
+    const state = useSunoStore.getState();
+    const dataToExport = {
+      baseUrl: state.baseUrl,
+      apiKey: state.apiKey,
+      tasks: state.tasks,
+      autoCheckInterval: state.autoCheckInterval,
+      autoRename: state.autoRename,
+      creativeHistory: state.creativeHistory,
+      customHistory: state.customHistory,
+    };
+    const jsonString = JSON.stringify(dataToExport, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `suno-client-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showSuccess(t('settings.toasts.exportSuccess'));
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const text = e.target?.result;
+        if (typeof text !== 'string') {
+          throw new Error('Invalid file content');
+        }
+        const importedState = JSON.parse(text);
+        
+        if (
+          typeof importedState.baseUrl === 'undefined' ||
+          typeof importedState.apiKey === 'undefined' ||
+          !Array.isArray(importedState.tasks)
+        ) {
+          throw new Error('Invalid file format');
+        }
+
+        importState(importedState);
+        
+        setLocalBaseUrl(importedState.baseUrl || '');
+        setLocalApiKey(importedState.apiKey || '');
+        setLocalInterval(importedState.autoCheckInterval || 5);
+        setLocalAutoRename(importedState.autoRename || false);
+
+        showSuccess(t('settings.toasts.importSuccess'));
+        
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      } catch (error) {
+        showError(t('settings.toasts.importFailed'));
+        console.error("Import failed:", error);
+      }
+    };
+    reader.onerror = () => {
+      showError(t('settings.toasts.importFailed'));
+    };
+    reader.readAsText(file);
   };
 
   return (
@@ -125,6 +200,32 @@ export function SettingsDialog() {
                 onCheckedChange={setLocalAutoRename}
               />
             </div>
+          </div>
+        </div>
+        <Separator />
+        <div className="grid gap-4 pt-4">
+          <div className="space-y-2">
+            <h4 className="font-medium leading-none">{t('settings.dataManagement')}</h4>
+            <p className="text-sm text-muted-foreground">
+              {t('settings.dataManagementDescription')}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={handleImportClick} className="w-full">
+              <Upload className="mr-2 h-4 w-4" />
+              {t('settings.importData')}
+            </Button>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept="application/json"
+              className="hidden"
+            />
+            <Button variant="outline" onClick={handleExport} className="w-full">
+              <Download className="mr-2 h-4 w-4" />
+              {t('settings.exportAllData')}
+            </Button>
           </div>
         </div>
         <DialogFooter className="sm:justify-between">

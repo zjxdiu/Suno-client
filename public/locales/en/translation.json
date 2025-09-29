@@ -10,7 +10,16 @@
     "autoCheck": "Auto Check",
     "language": "Language",
     "autoRename": "Auto Rename",
-    "save": "Save Changes"
+    "save": "Save Changes",
+    "dataManagement": "Data Management",
+    "dataManagementDescription": "Backup and restore your application data.",
+    "exportAllData": "Export Data",
+    "importData": "Import Data",
+    "toasts": {
+      "exportSuccess": "Data exported successfully!",
+      "importSuccess": "Data imported successfully!",
+      "importFailed": "Failed to import data. Please check the file format."
+    }
   },
   "createForm": {
     "creativeTab": "Creative",
@@ -52,14 +61,12 @@
   "taskList": {
     "title": "Task List",
     "refresh": "Refresh All",
-    "export": "Export Tasks",
     "empty": {
       "noTasks": "No tasks yet.",
       "createTask": "Create a new one to get started."
     },
     "toasts": {
-      "settingsNeeded": "Please set Base URL and API Key in settings first.",
-      "noTasksToExport": "There are no tasks to export."
+      "settingsNeeded": "Please set Base URL and API Key in settings first."
     }
   },
   "taskCard": {

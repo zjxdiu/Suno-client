@@ -3,7 +3,7 @@ import { TaskCard } from "./TaskCard";
 import { useEffect, useCallback } from "react";
 import { FetchResponseData, SunoClip, SunoTask } from "@/types/suno";
 import { Button } from "./ui/button";
-import { RefreshCw, Upload } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { showError } from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
@@ -81,29 +81,6 @@ export function TaskList() {
     tasksToForceCheck.forEach(task => fetchTaskStatus(task.id));
   }, [tasks, fetchTaskStatus, baseUrl, apiKey, t]);
 
-  const handleExport = () => {
-    if (tasks.length === 0) {
-      showError(t('taskList.toasts.noTasksToExport'));
-      return;
-    }
-  
-    const tasksToExport = tasks.map(task => ({
-      id: task.id,
-      title: task.title || task.gpt_description_prompt || '',
-    }));
-  
-    const jsonString = JSON.stringify(tasksToExport, null, 2);
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `suno-tasks-${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
   useEffect(() => {
     const hasUnfinishedTasks = tasks.some(t => t.status !== 'complete' && !t.fail_reason);
 
@@ -120,18 +97,6 @@ export function TaskList() {
       <div className="p-4 border-b flex justify-between items-center">
         <h2 className="text-lg font-semibold">{t('taskList.title')}</h2>
         <div className="flex items-center gap-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" onClick={handleExport}>
-                  <Upload className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{t('taskList.export')}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

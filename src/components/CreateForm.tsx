@@ -25,6 +25,7 @@ export function CreateForm() {
   const [customTitle, setCustomTitle] = useState("");
   const [makeInstrumental, setMakeInstrumental] = useState(false);
   const [mv, setMv] = useState("chirp-auk");
+  const [customMv, setCustomMv] = useState("");
 
   const [isCreativeHistoryOpen, setIsCreativeHistoryOpen] = useState(false);
   const [isCustomHistoryOpen, setIsCustomHistoryOpen] = useState(false);
@@ -32,7 +33,13 @@ export function CreateForm() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    let body: any = { mv, make_instrumental: makeInstrumental };
+    const modelToSend = mv === 'custom' ? customMv.trim() : mv;
+    if (!modelToSend) {
+      showError(t('createForm.toasts.modelRequired'));
+      return;
+    }
+
+    let body: any = { mv: modelToSend, make_instrumental: makeInstrumental };
 
     if (mode === 'creative') {
       body.gpt_description_prompt = gptDescriptionPrompt;
@@ -190,9 +197,24 @@ export function CreateForm() {
                     <SelectItem value="chirp-v3-5">Chirp v3.5</SelectItem>
                     <SelectItem value="chirp-auk">Chirp Auk</SelectItem>
                     <SelectItem value="chirp-v4">Chirp v4</SelectItem>
+                    <SelectItem value="chirp-bluejay">Chirp Bluejay</SelectItem>
+                    <SelectItem value="chirp-crow">Chirp Crow</SelectItem>
+                    <SelectItem value="custom">Custom</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
+              {mv === 'custom' && (
+                <div className="space-y-2">
+                  <Label htmlFor="custom-mv">{t('createForm.common.customModelName')}</Label>
+                  <Input
+                    id="custom-mv"
+                    name="custom-mv"
+                    placeholder={t('createForm.common.customModelPlaceholder')}
+                    value={customMv}
+                    onChange={(e) => setCustomMv(e.target.value)}
+                  />
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <Label htmlFor="make_instrumental">{t('createForm.common.instrumental')}</Label>
                 <Switch id="make_instrumental" name="make_instrumental" checked={makeInstrumental} onCheckedChange={setMakeInstrumental} />

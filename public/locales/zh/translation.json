@@ -44,7 +44,9 @@
       "modelVersion": "模型版本",
       "selectModel": "选择一个模型",
       "instrumental": "纯音乐",
-      "generate": "生成"
+      "generate": "生成",
+      "customModelName": "自定义模型名称",
+      "customModelPlaceholder": "输入模型名称，例如 chirp-v4"
     },
     "toasts": {
       "promptRequired": "创意模式需要提示词。",
@@ -55,7 +57,8 @@
       "invalidResponse": "从服务器收到无效响应。",
       "submitSuccess": "任务提交成功！",
       "submitFailed": "任务提交失败: {message}",
-      "errorOccurred": "发生错误: {message}"
+      "errorOccurred": "发生错误: {message}",
+      "modelRequired": "模型版本是必需的。"
     }
   },
   "taskList": {

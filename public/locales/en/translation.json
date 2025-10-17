@@ -44,7 +44,9 @@
       "modelVersion": "Model Version",
       "selectModel": "Select a model",
       "instrumental": "Instrumental",
-      "generate": "Generate"
+      "generate": "Generate",
+      "customModelName": "Custom Model Name",
+      "customModelPlaceholder": "Enter model name, e.g., chirp-v4"
     },
     "toasts": {
       "promptRequired": "Prompt is required for creative mode.",
@@ -55,7 +57,8 @@
       "invalidResponse": "Received an invalid response from the server.",
       "submitSuccess": "Task submitted successfully!",
       "submitFailed": "Task submission failed: {message}",
-      "errorOccurred": "An error occurred: {message}"
+      "errorOccurred": "An error occurred: {message}",
+      "modelRequired": "Model version is required."
     }
   },
   "taskList": {

@@ -113,5 +113,10 @@
     "use": "Use",
     "noTitle": "No Title",
     "noLyrics": "No Lyrics"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
   }
 }

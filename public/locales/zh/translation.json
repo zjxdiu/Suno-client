@@ -113,5 +113,10 @@
     "use": "使用",
     "noTitle": "无标题",
     "noLyrics": "无歌词"
+  },
+  "theme": {
+    "light": "亮色",
+    "dark": "暗色",
+    "system": "跟随系统"
   }
 }

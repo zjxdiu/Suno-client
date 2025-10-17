@@ -3,6 +3,7 @@ import { TaskList } from "@/components/TaskList";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { SettingsDialog } from "@/components/SettingsDialog";
 import { useTranslation } from "react-i18next";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -11,7 +12,10 @@ const Index = () => {
     <div className="h-screen w-screen flex flex-col bg-background text-foreground overflow-hidden">
       <header className="flex items-center justify-between p-4 border-b">
         <h1 className="text-xl font-bold">{t('header.title')}</h1>
-        <SettingsDialog />
+        <div className="flex items-center gap-2">
+          <ThemeSwitcher />
+          <SettingsDialog />
+        </div>
       </header>
       <main className="flex-1 overflow-hidden">
         <ResizablePanelGroup direction="horizontal" className="h-full">

@@ -11,8 +11,9 @@ import { SunoTask } from "@/types/suno";
 import { showLoading, showError, showSuccess, dismissToast } from "@/utils/toast";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { History } from "lucide-react";
+import { History, HelpCircle } from "lucide-react";
 import { PromptHistoryDialog } from "./PromptHistoryDialog";
+import { ModelHelpDialog } from "./ModelHelpDialog";
 
 export function CreateForm() {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ export function CreateForm() {
 
   const [isCreativeHistoryOpen, setIsCreativeHistoryOpen] = useState(false);
   const [isCustomHistoryOpen, setIsCustomHistoryOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -188,7 +190,12 @@ export function CreateForm() {
           <Card className="mt-4">
             <CardContent className="pt-6 space-y-4">
               <div className="flex items-center justify-between">
-                <Label htmlFor="mv">{t('createForm.common.modelVersion')}</Label>
+                <div className="flex items-center gap-1">
+                  <Label htmlFor="mv">{t('createForm.common.modelVersion')}</Label>
+                  <Button type="button" variant="ghost" size="icon" className="h-5 w-5" onClick={() => setIsHelpOpen(true)}>
+                    <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                  </Button>
+                </div>
                 <Select name="mv" value={mv} onValueChange={setMv}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder={t('createForm.common.selectModel')} />
@@ -241,6 +248,7 @@ export function CreateForm() {
         onSelect={handleSelectCustomHistory}
         mode="custom"
       />
+      <ModelHelpDialog isOpen={isHelpOpen} onOpenChange={setIsHelpOpen} />
     </>
   );
 }
